@@ -12,11 +12,6 @@ $("#search").on("click", function(){
        var tags=remotive.jobs[i].tags
        var url=remotive.jobs[i].url
        var company=remotive.jobs[i].company_name
-
-       console.log(title)
-       console.log(tags)
-       console.log(url)
-       console.log(company)
      
     //create new tiles to append to mainbody
     var tileid="tile-"+a
@@ -41,7 +36,7 @@ $("#search").on("click", function(){
        cardcontent.append(titleEl)
 
         //create company el
-      var companyEl=$("<p>").addClass("company")
+      var companyEl=$("<button>").addClass("company")
       companyEl.text(company)
       cardcontent.append(companyEl)
 
@@ -72,18 +67,41 @@ $("#search").on("click", function(){
        var dropdown=$("#"+ischildid)
        dropdown.addClass("tile is-child box notification is-info")
        dropdown.text("this is the dropdown")
+       
+   } 
+  })
+
+})
+
+$(document).on("click", ".company", function(event){
+  event.preventDefault();
+
+  var apiKey = "api-key=TD8WaDGvjAOlRzEak47DMtf8oe7ReO62"
+  var searchTag = "&q=" + $(this).text()
+  var searchFilter = "&fq=section_name:(%22technology%22)"
+  var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?" + apiKey + searchFilter + searchTag;
+  var cardContent = $(this).parent()
+
+  $.ajax({
+    url: queryURL,
+    method:"GET"
+   }) .then(function(newsAPI){
+
+  var dropDown = cardContent.siblings(".is-child")
+
+  for(var j=0; j < 3; j++ ){
+    var dataResponse = newsAPI.response.docs;
+
+    var snippet = $("<p>").text("Summary: " + dataResponse[j].snippet);
+    var headline = $("<p>").text("Section: " + dataResponse[j].headline.main);
+    var articleURL = $("<a>").text("Link: " + dataResponse[j].web_url).attr({'href': dataResponse[j].web_url , "target": "_blank"});
+ 
+    dropDown.append(headline, snippet, articleURL);
+  }
+  
+})
 
 
 
-
-       }
-
-
-
-
-
-
-      } 
-  )
 
 })
