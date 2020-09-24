@@ -22,7 +22,7 @@ $("#search").on("click", function(){
     var tileid="tile-"+a
     $("#mainbody").append("<div id="+tileid+"></div>")
     var tile= $("#"+tileid)
-    tile.addClass("tile is-parent notification is-primary is-vertical")
+    tile.addClass("tile is-parent notification is-vertical is-12 has-text-black")
      //create card to append to tiles
       var idcont="cardcontent"+a
       var tileid="tile"+a
@@ -31,7 +31,7 @@ $("#search").on("click", function(){
       //tile.append("<div id="+cardid+"></div>")
      tile.append("<div id="+idcont+"></div>")
       var cardcontent=$("#"+idcont)
-      cardcontent.addClass("card-content")
+      cardcontent.addClass("card-content ")
 
        // creates job title header for cards
           var titleEl=$("<p>")
@@ -70,7 +70,7 @@ $("#search").on("click", function(){
        var ischildid="childtile-"+a
        tile.append("<div id="+ischildid+"></div>")
        var dropdown=$("#"+ischildid)
-       dropdown.addClass("tile is-child box notification is-info")
+       dropdown.addClass("tile is-child box notification is-dark has-text-white is-hidden")
        dropdown.text("this is the dropdown")
 
 
