@@ -1,7 +1,5 @@
-$("#clear").on("click", function(){
-   $("#mainbody").empty()
-})
 $("#search").on("click", function(){
+  $("#mainbody").empty()
   var query=  "https://cors-anywhere.herokuapp.com/https://remotive.io/api/remote-jobs?category=software-dev"
   $.ajax({
    url: query,
@@ -20,14 +18,18 @@ $("#search").on("click", function(){
        console.log(url)
        console.log(company)
      
-     //create card to append to mainbody
-      var id="card"+a
+    //create new tiles to append to mainbody
+    var tileid="tile-"+a
+    $("#mainbody").append("<div id="+tileid+"></div>")
+    var tile= $("#"+tileid)
+    tile.addClass("tile is-parent notification is-primary is-vertical")
+     //create card to append to tiles
       var idcont="cardcontent"+a
+      var tileid="tile"+a
+
       
-      $("#mainbody").append("<div id="+id+"></div>")
-      var card=$("#"+id)
-      card.addClass("card")
-      card.append("<div id="+idcont+"></div>")
+      //tile.append("<div id="+cardid+"></div>")
+     tile.append("<div id="+idcont+"></div>")
       var cardcontent=$("#"+idcont)
       cardcontent.addClass("card-content")
 
@@ -57,13 +59,31 @@ $("#search").on("click", function(){
        if(tags.length!=0){
            for(var x=0; x<tags.length; x++){
            var footeritem=$("<p>").addClass("card-footer-item")
-          footeritem.append(footerEl)
+          footerEl.append(footeritem)
            var tagslink=$("<span>")
+           
            tagslink.text(tags[x])
           tagslink.append(footerEl)
        }}
+       
+       //creates new tile is child.
+       var ischildid="childtile-"+a
+       tile.append("<div id="+ischildid+"></div>")
+       var dropdown=$("#"+ischildid)
+       dropdown.addClass("tile is-child box notification is-info")
+       dropdown.text("this is the dropdown")
+
+
+
+
+       }
+
+
+
+
+
 
       } 
-  })
+  )
 
 })
