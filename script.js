@@ -6,23 +6,18 @@ $("#search").on("click", function(){
    method:"GET"
   }) .then(function(remotive){
       
-      for(var i=0; i < 8; i++ ){
+      for(var i=0; i < 15; i++ ){
           var a=i+1
        var title= remotive.jobs[i].title
        var tags=remotive.jobs[i].tags
        var url=remotive.jobs[i].url
        var company=remotive.jobs[i].company_name
-
-       console.log(title)
-       console.log(tags)
-       console.log(url)
-       console.log(company)
      
     //create new tiles to append to mainbody
     var tileid="tile-"+a
     $("#mainbody").append("<div id="+tileid+"></div>")
     var tile= $("#"+tileid)
-    tile.addClass("tile is-parent notification is-primary is-vertical")
+    tile.addClass("tile is-parent notification is-vertical is-12 has-text-black")
      //create card to append to tiles
       var idcont="cardcontent"+a
       var tileid="tile"+a
@@ -31,7 +26,7 @@ $("#search").on("click", function(){
       //tile.append("<div id="+cardid+"></div>")
      tile.append("<div id="+idcont+"></div>")
       var cardcontent=$("#"+idcont)
-      cardcontent.addClass("card-content")
+      cardcontent.addClass("card-content ")
 
        // creates job title header for cards
           var titleEl=$("<p>")
@@ -41,8 +36,8 @@ $("#search").on("click", function(){
        cardcontent.append(titleEl)
 
         //create company el
-      var companyEl=$("<p>").addClass("company")
-      companyEl.text(company)
+      var companyEl=$("<span>").addClass("company")
+      companyEl.html("<p>"+company+"</p>")
       cardcontent.append(companyEl)
 
        //creates url element
@@ -70,20 +65,60 @@ $("#search").on("click", function(){
        var ischildid="childtile-"+a
        tile.append("<div id="+ischildid+"></div>")
        var dropdown=$("#"+ischildid)
-       dropdown.addClass("tile is-child box notification is-info")
-       dropdown.text("this is the dropdown")
+       dropdown.addClass("tile is-child box notification is-dark has-text-white is-hidden is-vertical")
+      
+       
+   } 
+  })
+
+})
+
+$(document).on("click", ".company", function(event){
+  event.preventDefault();
+
+  var apiKey = "api-key=TD8WaDGvjAOlRzEak47DMtf8oe7ReO62"
+  var searchTag = "&q=" + $(this).text()
+  console.log(searchTag)
+  var searchFilter = "&fq=section_name:(%22technology%22)"
+  var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?" + apiKey + searchFilter + searchTag;
+  var cardContent = $(this).parent()
+  $.ajax({
+    url: queryURL,
+    method:"GET"
+   }) .then(function(newsAPI){
+    console.log(queryURL)
+    console.log(newsAPI.response.docs)
+    if(newsAPI.response.docs.length===0){
+      
+      var dropDown = cardContent.siblings(".is-child")
+      dropDown.removeClass("is-hidden")
+      
+      var nullmessage =$("<p>").text("No New York Times article for this company")
+      dropDown.append(nullmessage)
+      
+    }
+    else {
+
+      var dropDown = cardContent.siblings(".is-child")
+      dropDown.removeClass("is-hidden")
+
+      for(var j=0; j < 3; j++ ){
+        var dd=$("<div>")
+        dropDown.append(dd)  
+        dd.addClass("is-child")
+        var dataResponse = newsAPI.response.docs;
+        var br=$("<br>")
+        var snippet = $("<p>").text("Summary: " + dataResponse[j].snippet);
+        var headline = $("<p>").text("Headline: " + dataResponse[j].headline.main);
+        
+        var articleURL = $("<a>").text("Link: " + dataResponse[j].web_url).attr({'href': dataResponse[j].web_url , "target": "_blank"});
+        dd.append(headline,br, snippet,br, articleURL,br, br);
+  }
+  }
+  
+})
 
 
 
-
-       }
-
-
-
-
-
-
-      } 
-  )
 
 })
