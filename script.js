@@ -6,7 +6,7 @@ $("#search").on("click", function(){
    method:"GET"
   }) .then(function(remotive){
       
-      for(var i=0; i < 8; i++ ){
+      for(var i=0; i < 15; i++ ){
           var a=i+1
        var title= remotive.jobs[i].title
        var tags=remotive.jobs[i].tags
@@ -36,8 +36,8 @@ $("#search").on("click", function(){
        cardcontent.append(titleEl)
 
         //create company el
-      var companyEl=$("<button>").addClass("company")
-      companyEl.text(company)
+      var companyEl=$("<span>").addClass("company")
+      companyEl.html("<p>"+company+"</p>")
       cardcontent.append(companyEl)
 
        //creates url element
@@ -65,8 +65,8 @@ $("#search").on("click", function(){
        var ischildid="childtile-"+a
        tile.append("<div id="+ischildid+"></div>")
        var dropdown=$("#"+ischildid)
-       dropdown.addClass("tile is-child box notification is-dark has-text-white is-hidden")
-       dropdown.text("this is the dropdown")
+       dropdown.addClass("tile is-child box notification is-dark has-text-white is-hidden is-vertical")
+      
        
    } 
   })
@@ -78,25 +78,42 @@ $(document).on("click", ".company", function(event){
 
   var apiKey = "api-key=TD8WaDGvjAOlRzEak47DMtf8oe7ReO62"
   var searchTag = "&q=" + $(this).text()
+  console.log(searchTag)
   var searchFilter = "&fq=section_name:(%22technology%22)"
   var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?" + apiKey + searchFilter + searchTag;
   var cardContent = $(this).parent()
-
   $.ajax({
     url: queryURL,
     method:"GET"
    }) .then(function(newsAPI){
+    console.log(queryURL)
+    console.log(newsAPI.response.docs)
+    if(newsAPI.response.docs.length===0){
+      
+      var dropDown = cardContent.siblings(".is-child")
+      dropDown.removeClass("is-hidden")
+      
+      var nullmessage =$("<p>").text("No New York Times article for this company")
+      dropDown.append(nullmessage)
+      
+    }
+    else {
 
-  var dropDown = cardContent.siblings(".is-child")
+      var dropDown = cardContent.siblings(".is-child")
+      dropDown.removeClass("is-hidden")
 
-  for(var j=0; j < 3; j++ ){
-    var dataResponse = newsAPI.response.docs;
-
-    var snippet = $("<p>").text("Summary: " + dataResponse[j].snippet);
-    var headline = $("<p>").text("Section: " + dataResponse[j].headline.main);
-    var articleURL = $("<a>").text("Link: " + dataResponse[j].web_url).attr({'href': dataResponse[j].web_url , "target": "_blank"});
- 
-    dropDown.append(headline, snippet, articleURL);
+      for(var j=0; j < 3; j++ ){
+        var dd=$("<div>")
+        dropDown.append(dd)  
+        dd.addClass("is-child")
+        var dataResponse = newsAPI.response.docs;
+        var br=$("<br>")
+        var snippet = $("<p>").text("Summary: " + dataResponse[j].snippet);
+        var headline = $("<p>").text("Headline: " + dataResponse[j].headline.main);
+        
+        var articleURL = $("<a>").text("Link: " + dataResponse[j].web_url).attr({'href': dataResponse[j].web_url , "target": "_blank"});
+        dd.append(headline,br, snippet,br, articleURL,br, br);
+  }
   }
   
 })
