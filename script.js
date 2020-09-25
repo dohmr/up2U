@@ -1,6 +1,8 @@
 $("#search").on("click", function () {
   $("#mainbody").empty()
   $("#ancestorTile").removeClass("is-hidden");
+  var instructions = $("<p class='has-text-centered'><span class='title is-6'>Search Results:</span><br><span class='subtitle is-6'>Click the company name to see related New York Times articles.</span> </p>")
+  $("#mainbody").append(instructions)
   $("#search").addClass("is-loading")
   $("#search").attr("disabled", true)
   
@@ -89,6 +91,8 @@ $("#search").on("click", function () {
       //ends spinner on search button function completing
       $("#search").removeClass("is-loading")
       $("#search").attr("disabled", false)
+
+      
     }
   })
 
