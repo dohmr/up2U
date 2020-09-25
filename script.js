@@ -1,5 +1,6 @@
 $("#search").on("click", function(){
   $("#mainbody").empty()
+  $("#ancestorTile").removeClass("is-hidden");
   var query=  "https://cors-anywhere.herokuapp.com/https://remotive.io/api/remote-jobs?category=software-dev"
   $.ajax({
    url: query,
@@ -110,11 +111,10 @@ $(document).on("click", ".company", function(event){
     }
     else {
       // added an empty function to prevent excess articles 09/25
-      $(".is-child").empty()
 
       var dropDown = cardContent.siblings(".is-child")
       dropDown.removeClass("is-hidden")
-      
+      dropDown.empty();
       // grab 3 articles related to company
       for(var j=0; j < 3; j++ ){
         var dd=$("<div>")
