@@ -87,7 +87,7 @@ $("#search").on("click", function(){
 
 $(document).on("click", ".company", function(event){
   event.preventDefault();
-
+  
   var apiKey = "api-key=TD8WaDGvjAOlRzEak47DMtf8oe7ReO62"
   var searchTag = "&q=" + $(this).text()
   console.log(searchTag)
@@ -109,6 +109,8 @@ $(document).on("click", ".company", function(event){
       
     }
     else {
+      // added an empty function to prevent excess articles 09/25
+      $(".is-child").empty()
 
       var dropDown = cardContent.siblings(".is-child")
       dropDown.removeClass("is-hidden")
@@ -127,6 +129,7 @@ $(document).on("click", ".company", function(event){
         dd.append(headline,br, snippet,br, articleURL,br, br);
     }
   }
+  
   
 })
 
