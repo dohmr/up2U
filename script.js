@@ -132,17 +132,13 @@ $(document).on("click", ".company", function (event) {
         dropDown.append(dd)
         dd.addClass("is-child")
         var dataResponse = newsAPI.response.docs;
-        var br = $("<br>")
-        var snippet = $("<p>").text("Summary: " + dataResponse[j].snippet);
-        var headline = $("<p>").text("Headline: " + dataResponse[j].headline.main);
+
+        var br=$("<br>")
+        var snippet = $("<p>").text(dataResponse[j].snippet);
+        var headline = $("<a>").text(dataResponse[j].headline.main).attr({'href': dataResponse[j].web_url , "target": "_blank"});
         //url for article search
-        var articleURL = $("<a>").text("Link: " + dataResponse[j].web_url).attr({ 'href': dataResponse[j].web_url, "target": "_blank" });
-        
-        
-
-        dd.append(headline, br, snippet, br, articleURL, br, br);
-
-
+        // var articleURL = $("<a>").text("Link: " + dataResponse[j].web_url).attr({'href': dataResponse[j].web_url , "target": "_blank"});
+        dd.append(headline,br, snippet,br, br);
       }
       //Delete button via bulma to close the articles    
       var deleteButton = $("<button class='delete'></button>")
@@ -150,6 +146,7 @@ $(document).on("click", ".company", function (event) {
       $(".delete").on("click", function (event) {
         $(dropDown).addClass("is-hidden")
       })
+
     }
 
 
