@@ -3,13 +3,15 @@ $("#search").on("click", function () {
   $("#ancestorTile").removeClass("is-hidden");
   $("#search").addClass("is-loading")
   $("#search").attr("disabled", true)
+  
+  var numinput = $("#checknuminput").val()
   var query = "https://cors-anywhere.herokuapp.com/https://remotive.io/api/remote-jobs?category=software-dev"
   $.ajax({
     url: query,
     method: "GET"
   }).then(function (remotive) {
 
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < numinput; i++) {
       var a = i + 1
       var title = remotive.jobs[i].title
       var tags = remotive.jobs[i].tags
