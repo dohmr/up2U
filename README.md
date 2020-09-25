@@ -26,4 +26,10 @@ Framework: https://bulma.io/
 ; javaScript 
 
 # Screens
-Coming soon!
+With Job listings
+
+![Newb Jobs Job listings](assets/newb-jobs.jpg);
+
+With Job related articles
+
+![Newb Jobs Article drop](assets/newb-drop.jpg);
