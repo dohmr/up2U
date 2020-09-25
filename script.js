@@ -105,29 +105,21 @@ $(document).on("click", ".company", function (event) {
   var searchFilter = "&fq=section_name:(%22technology%22)"
   var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?" + apiKey + searchFilter + searchTag;
   var cardContent = $(this).parent()
+  var dropDown = cardContent.siblings(".is-child")
+      dropDown.removeClass("is-hidden")
+  
   $.ajax({
     url: queryURL,
     method: "GET"
   }).then(function (newsAPI) {
 
     if (newsAPI.response.docs.length === 0) {
-
-      var dropDown = cardContent.siblings(".is-child")
-      dropDown.removeClass("is-hidden")
-
       var nullmessage = $("<p>").text("No New York Times article for this company")
       dropDown.append(nullmessage)
-
     }
     else {
       // added an empty function to prevent excess articles 09/25
-
-      var dropDown = cardContent.siblings(".is-child")
-      dropDown.removeClass("is-hidden")
-      dropDown.empty();
-      
-      
-
+      dropDown.empty()
       // grab 3 articles related to company
       for (var j = 0; j < 3; j++) {
         var dd = $("<div>")
@@ -143,13 +135,13 @@ $(document).on("click", ".company", function (event) {
         dd.append(headline,br, snippet,br, br);
       }
       //Delete button via bulma to close the articles    
-      var deleteButton = $("<button class='delete'></button>")
-      dropDown.append(deleteButton)
-      $(".delete").on("click", function (event) {
-        $(dropDown).addClass("is-hidden")
-      })
-
+      
     }
+    var deleteButton = $("<button class='delete'></button>")
+    dropDown.append(deleteButton)
+    $(".delete").on("click", function (event) {
+      $(dropDown).addClass("is-hidden")
+    })
 
 
   })
