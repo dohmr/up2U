@@ -154,3 +154,6 @@ $(document).on("click", ".company", function (event) {
 
 
 })
+$(document).on("mouseenter",".company", function(){
+  $(this).css("cursor", "pointer");
+ })
