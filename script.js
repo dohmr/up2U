@@ -63,6 +63,7 @@ $("#search").on("click", function () {
       //creates url element
       var urlEl = $("<a>")
       urlEl.attr("href", url)
+      urlEl.attr("target", "_blank")
       urlEl.text("Click here to view full job description")
       cardcontent.append(urlEl)
 
