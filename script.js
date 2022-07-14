@@ -7,7 +7,7 @@ $("#search").on("click", function () {
   $("#search").attr("disabled", true)
   
   var numinput = $("#checknuminput").val()
-  var query = "https://cors-anywhere.herokuapp.com/https://remotive.io/api/remote-jobs?category=software-dev"
+  var query = "https://remotive.com/api/remote-jobs?category=software-dev"
   $.ajax({
     url: query,
     method: "GET"
